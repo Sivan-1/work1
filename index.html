@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页 · 中英切换</title>
+    <!-- 使用简单干净的样式，适配GitHub Pages风格 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        body {
+            background: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+        .card {
+            max-width: 900px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 40px rgba(0,10,30,0.08), 0 6px 12px rgba(0,0,0,0.02);
+            padding: 2.5rem 2.2rem;
+            transition: all 0.2s ease;
+            border: 1px solid #f0f2f5;
+        }
+        /* 语言切换栏 */
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .lang-btn {
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.4rem 0.8rem;
+            border-radius: 40px;
+            color: #4b5563;
+            transition: 0.2s;
+        }
+        .lang-btn.active {
+            background: #111827;
+            color: white;
+            pointer-events: none;
+        }
+        .lang-btn:not(.active):hover {
+            background: #eef2f6;
+            color: #111827;
+        }
+
+        /* 内容区域 */
+        .section {
+            margin-bottom: 2.2rem;
+            border-bottom: 1px dashed #e2e8f0;
+            padding-bottom: 1.5rem;
+        }
+        .section:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.2rem;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .section-title span {
+            background: #eef2ff;
+            color: #1e3a8a;
+            font-size: 0.9rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-weight: 400;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 0.8rem 1.5rem;
+            align-items: baseline;
+        }
+        .info-item {
+            display: contents;
+        }
+        .info-label {
+            font-weight: 500;
+            color: #334155;
+            white-space: nowrap;
+        }
+        .info-value {
+            color: #0f172a;
+            word-break: break-word;
+        }
+        .desc-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #1e293b;
+            background: #f8fafc;
+            padding: 1.2rem 1.5rem;
+            border-radius: 20px;
+            border-left: 5px solid #3b82f6;
+        }
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem 0.8rem;
+            margin-top: 0.3rem;
+        }
+        .skill-tag {
+            background: #f1f5f9;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #0c4a6e;
+            border: 1px solid #e2e8f0;
+        }
+        .edu-item {
+            margin-bottom: 1.2rem;
+        }
+        .edu-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #0f172a;
+        }
+        .edu-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            color: #475569;
+            font-size: 0.95rem;
+            margin-top: 0.2rem;
+        }
+        .footer-note {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.8rem;
+            font-size: 0.9rem;
+            color: #64748b;
+            border-top: 1px solid #e9edf2;
+            padding-top: 1.5rem;
+        }
+        .update-badge {
+            background: #f1f4f9;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: 500;
+        }
+        a {
+            color: #2563eb;
+            text-decoration: none;
+            border-bottom: 1px dotted #b9d0f8;
+        }
+        a:hover {
+            color: #1d4ed8;
+            border-bottom: 1px solid;
+        }
+        /* 邮箱保持可读 */
+        .contact-email {
+            unicode-bidi: plaintext;
+        }
+        /* 双语隐藏控制 */
+        [data-lang="zh"] .en-only,
+        [data-lang="en"] .zh-only {
+            display: none;
+        }
+
+        /* 响应式 */
+        @media (max-width: 550px) {
+            .card { padding: 1.8rem; }
+            .grid-2 { grid-template-columns: 1fr; gap: 0.3rem; }
+            .info-item .info-label { margin-top: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card" id="mainCard">
+        <!-- 语言切换按钮 -->
+        <div class="lang-bar">
+            <button class="lang-btn active" id="btnZh" data-lang="zh">🇨🇳 中文</button>
+            <button class="lang-btn" id="btnEn" data-lang="en">🇬🇧 English</button>
+        </div>
+
+        <!-- 所有双语内容均使用 data-zh / data-en 属性存放，通过js控制显示 -->
+        <div id="contentContainer">
+            <!-- 基本信息区域 (中英对照通过自定义属性实现，动态渲染) -->
+            <div class="section" id="basicSection">
+                <div class="section-title">
+                    <span class="zh-only">📋</span><span class="en-only">📋</span>
+                    <span data-zh="基本信息" data-en="Basic Information"></span>
+                </div>
+                <div class="grid-2">
+                    <!-- 姓名 -->
+                    <div class="info-label" data-zh="姓名" data-en="Name"></div>
+                    <div class="info-value" data-zh="陈思远" data-en="Siyuan Chen"></div>
+                    <!-- 学校/专业 -->
+                    <div class="info-label" data-zh="学校/专业" data-en="University / Major"></div>
+                    <div class="info-value" data-zh="华东师范大学 · 数据科学与大数据技术 (2022级)" data-en="East China Normal Univ. · Data Science (2022)"></div>
+                    <!-- 研究兴趣或职业方向 -->
+                    <div class="info-label" data-zh="研究兴趣 / 职业方向" data-en="Research Interests / Career"></div>
+                    <div class="info-value" data-zh="机器学习、经济数据分析、人工智能应用" data-en="Machine Learning, Economic Data Analysis, AI Applications"></div>
+                    <!-- 联系方式 (邮箱) -->
+                    <div class="info-label" data-zh="联系方式" data-en="Contact"></div>
+                    <div class="info-value contact-email" data-zh="siyuan.chen@ecnu.edu.cn" data-en="siyuan.chen@ecnu.edu.cn"></div>
+                </div>
+            </div>
+
+            <!-- 个人简介 -->
+            <div class="section" id="profileSection">
+                <div class="section-title">
+                    <span class="zh-only">📝</span><span class="en-only">📝</span>
+                    <span data-zh="个人简介" data-en="Profile"></span>
+                </div>
+                <div class="desc-text" id="profileDesc" data-zh="你好，我是陈思远，一名数据科学专业大三学生。热衷于从复杂数据中提炼洞察，并解决实际问题。具备扎实的统计学基础和编程能力，曾参与“城市交通流量预测”课题，并协助教授完成文本分析项目。期待在数据分析或商业智能领域贡献价值，并持续成长。" data-en="Hello! I'm Siyuan Chen, a junior majoring in Data Science. Passionate about extracting insights from complex data and solving real-world problems. Solid foundation in statistics and programming, participated in the 'Urban Traffic Flow Prediction' project, and assisted a professor with text analysis tasks. Looking forward to contributing in data analytics or business intelligence while continuously growing.">
+                        <!-- 动态填充内容，但保留此元素作为容器，不写死文字 -->
+                </div>
+            </div>
+
+            <!-- 技能 (含多个标签) -->
+            <div class="section" id="skillsSection">
+                <div class="section-title">
+                    <span class="zh-only">⚙️</span><span class="en-only">⚙️</span>
+                    <span data-zh="技能" data-en="Skills"></span>
+                </div>
+                <div class="skill-tags" id="skillTags">
+                    <!-- 通过js生成中英技能标签，但也可静态化，使用语言切换显示隐藏。这里采用静态双标签用语言控制，简单可靠 -->
+                    <span class="skill-tag zh-only" data-zh="Python (熟练)" data-en="Python (Proficient)"></span>
+                    <span class="skill-tag en-only" data-zh="Python (熟练)" data-en="Python (Proficient)"></span>
+
+                    <span class="skill-tag zh-only" data-zh="数据分析 (Pandas, SQL)" data-en="Data Analysis (Pandas, SQL)"></span>
+                    <span class="skill-tag en-only" data-zh="数据分析 (Pandas, SQL)" data-en="Data Analysis (Pandas, SQL)"></span>
+
+                    <span class="skill-tag zh-only" data-zh="计量/统计 (R, Stata)" data-en="Econometrics/Statistics (R, Stata)"></span>
+                    <span class="skill-tag en-only" data-zh="计量/统计 (R, Stata)" data-en="Econometrics/Statistics (R, Stata)"></span>
+
+                    <span class="skill-tag zh-only" data-zh="学术写作 / 报告" data-en="Academic Writing / Reports"></span>
+                    <span class="skill-tag en-only" data-zh="学术写作 / 报告" data-en="Academic Writing / Reports"></span>
+
+                    <span class="skill-tag zh-only" data-zh="Tableau / 数据可视化" data-en="Tableau / Data Visualization"></span>
+                    <span class="skill-tag en-only" data-zh="Tableau / 数据可视化" data-en="Tableau / Data Visualization"></span>
+
+                    <span class="skill-tag zh-only" data-zh="Git & 团队协作" data-en="Git & Collaboration"></span>
+                    <span class="skill-tag en-only" data-zh="Git & 团队协作" data-en="Git & Collaboration"></span>
+                </div>
+            </div>
+
+            <!-- 教育经历/课程经历 -->
+            <div class="section" id="eduSection">
+                <div class="section-title">
+                    <span class="zh-only">🎓</span><span class="en-only">🎓</span>
+                    <span data-zh="教育经历 / 课程经历" data-en="Education & Coursework"></span>
+                </div>
+                <div class="edu-item">
+                    <div class="edu-title" data-zh="华东师范大学 数据科学与大数据技术  (2022 - 2026)" data-en="East China Normal Univ. - Data Science (2022 - 2026)"></div>
+                    <div class="edu-meta">
+                        <span data-zh="GPA: 3.8/4.0" data-en="GPA: 3.8/4.0"></span>
+                        <span data-zh="核心课程: 机器学习, 计量经济学, 数据库,  Python程序设计" data-en="Core: Machine Learning, Econometrics, Database, Python Programming"></span>
+                    </div>
+                </div>
+                <div class="edu-item">
+                    <div class="edu-title" data-zh="课程项目: 上海市二手房价格分析 (2024)" data-en="Course Project: Shanghai Resale Price Analysis (2024)"></div>
+                    <div class="edu-meta">
+                        <span data-zh="利用Python爬虫+线性回归识别影响房价的关键因素" data-en="Used Python crawler + linear regression to identify key price factors"></span>
+                    </div>
+                </div>
+                <div class="edu-item">
+                    <div class="edu-title" data-zh="荣誉: 校级优秀学生奖学金 (2023-2024)" data-en="Honor: University Outstanding Scholarship (2023-2024)"></div>
+                </div>
+            </div>
+
+            <!-- 最后更新日期 (含标志) -->
+            <div class="footer-note">
+                <div class="update-badge">
+                    <span>📅</span>
+                    <span id="updateDate" data-zh="最后更新: 2026-03-07" data-en="Last updated: 2026-03-07"></span>
+                </div>
+                <div style="display: flex; gap: 1.2rem;">
+                    <span>🐙 <a href="#" target="_blank" data-zh="GitHub" data-en="GitHub"></a></span>
+                    <span>📫 <a href="mailto:siyuan.chen@ecnu.edu.cn">Email</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // 获取所有带双语属性的元素 (这里使用基于class和属性的综合方法)
+            const contentNode = document.getElementById('contentContainer');
+            const btnZh = document.getElementById('btnZh');
+            const btnEn = document.getElementById('btnEn');
+
+            // 存储所有需要切换文本的元素：包括 .section-title > span (第二个span), 还有.info-label, .info-value, .desc-text, .edu-title, .edu-meta span, .update-badge span:last-child, 以及链接文本等。
+            // 更简单的做法：使用属性选择器统一处理，但为了精确，我们手动收集或者采用全局属性遍历。
+            // 更稳健：所有拥有 data-zh 和 data-en 属性的元素，我们都监听。
+            const bilingualElements = document.querySelectorAll('[data-zh][data-en]');
+
+            // 函数：根据当前语言更新所有带data-zh/en属性的innerText
+            function setLanguage(lang) {
+                // 更新按钮激活状态
+                if (lang === 'zh') {
+                    btnZh.classList.add('active');
+                    btnEn.classList.remove('active');
+                    document.documentElement.lang = 'zh'; 
+                } else {
+                    btnEn.classList.add('active');
+                    btnZh.classList.remove('active');
+                    document.documentElement.lang = 'en';
+                }
+                // 设置整个容器的语言属性用于css (控制zh-only/en-only)
+                document.getElementById('mainCard').setAttribute('data-lang', lang);
+
+                // 更新所有双语元素的文本
+                bilingualElements.forEach(el => {
+                    const zhText = el.getAttribute('data-zh');
+                    const enText = el.getAttribute('data-en');
+                    if (lang === 'zh' && zhText) {
+                        el.innerText = zhText;
+                    } else if (lang === 'en' && enText) {
+                        el.innerText = enText;
+                    }
+                });
+
+                // 特殊处理技能标签里的 .skill-tag 它们也带 data-zh data-en，但同时又分为zh-only/en-only用于css控制显示隐藏？
+                // 但我们已经通过data-lang + css隐藏了不同语言区块，但是标签的文本也需要切换吗？上面bilingualElements包括了所有带data-zh/en的tag，
+                // 但是那些tag同时有语言专属class，如果设置innerText会覆盖掉原有的双语言。我们可以保留两种静态标签，让css控制显示隐藏即可，不需要通过js改文本。
+                // 但现在的 .skill-tag 既有zh-only又有en-only, 且同时有 data-zh 和 data-en 属性，这样会干扰。
+                // 解决方案一：去除技能标签的data-zh/en属性，仅使用zh-only/en-only配合css显示隐藏。但这样切换时文本不变（不同语言是硬编码到标签里的，已经正确）
+                // 所以我们对技能标签单独处理：移除它们的data-zh/en避免被覆盖。
+                // 同样，section-title里的小图标span没有data属性，不需要担心。
+                // 让我们优化一下：移除所有 .skill-tag 的 data-zh data-en 因为他们通过zh-only/en-only控制显示。同时保证zh-only内是中文，en-only内是英文。
+                // 但上面写html时我确实给每个skill-tag加上了data-zh/en，需清理。
+                // 我们立即在执行前清理掉技能标签的data属性，以避免错误覆盖。
+                document.querySelectorAll('.skill-tag').forEach(tag => {
+                    tag.removeAttribute('data-zh');
+                    tag.removeAttribute('data-en');
+                });
+
+                // 另外，footer中的github链接文本，也通过data控制，好。
+                // 但是更新日期我们使用了#updateDate，它已经有data-zh/en，并且是独立元素，可以。
+                // 但是注意 .section-title 中的span（图标后的文字）是一个单独的span，有data-zh/en，正是我们需要的。
+                // 一切正常。
+            }
+
+            // 移除技能标签多余data属性 (确保它们只受css控制)
+            // 再确保技能标签内容正确(已经硬编码: zh-only显示中文，en-only显示英文)
+            // 但是要注意：因为html内 .skill-tag.zh-only 的内容本来就是中文，.skill-tag.en-only的内容本来就是英文，我们保留原样。
+            // 然而在写html时我误将中英内容都放在了data-zh/data-en里，而innerText为空，需要补全innerText
+            // 修复：提前手动设置innerText从属性复制一次，然后移除属性。但建议直接在html写出innerText（我已经写了），并且去掉data属性。
+            // 查看上面的html： .skill-tag 我是写成类似 <span class="skill-tag zh-only" data-zh="Python (熟练)" data-en="Python (Proficient)"></span> 
+            // 这样内部无文字，必须用js填充，或者直接填写innerText。我们在此处脚本执行前填充初始值。
+            // 初始化时从data-zh/en填充一次，然后再移除属性避免切换干扰。
+            document.querySelectorAll('.skill-tag').forEach(tag => {
+                if (tag.classList.contains('zh-only')) {
+                    tag.innerText = tag.getAttribute('data-zh') || '';
+                } else if (tag.classList.contains('en-only')) {
+                    tag.innerText = tag.getAttribute('data-en') || '';
+                }
+                // 移除data属性，之后切换语言不受影响
+                tag.removeAttribute('data-zh');
+                tag.removeAttribute('data-en');
+            });
+
+            // 再处理 .desc-text 内容: 由于我们使用data属性存放段落，但元素内无文字，需设置初始innerText
+            const profileEl = document.getElementById('profileDesc');
+            if (profileEl) {
+                const zh = profileEl.getAttribute('data-zh');
+                const en = profileEl.getAttribute('data-en');
+                // 默认中文
+                profileEl.innerText = zh;
+            }
+
+            // 同样，.update-badge 内的span id=updateDate 也有data属性，且innerText空，填充默认中文
+            const updateEl = document.getElementById('updateDate');
+            if (updateEl) {
+                updateEl.innerText = updateEl.getAttribute('data-zh');
+            }
+
+            // 其余.info-label .info-value等已经在bilingualElements里，并且innerText为空，需要先填充一遍默认中文
+            bilingualElements.forEach(el => {
+                // 但有些元素可能已由上面处理过(例如profileDesc updateDate)，为了防止重复覆盖，我们可过滤掉已手动设置的。
+                // 简单过滤：如果元素没有innerText长度，则设置。
+                if (!el.innerText.trim()) {
+                    const zh = el.getAttribute('data-zh');
+                    if (zh) el.innerText = zh;
+                }
+            });
+
+            // 重新获取bilingualElements，因为技能标签移除了data属性，就不包含它们了
+            // 更新bilingualElements变量
+            const updatedBilingual = document.querySelectorAll('[data-zh][data-en]');
+
+            // 切换函数重新绑定
+            function setLanguageFinal(lang) {
+                // 按钮状态
+                if (lang === 'zh') {
+                    btnZh.classList.add('active');
+                    btnEn.classList.remove('active');
+                    document.documentElement.lang = 'zh';
+                } else {
+                    btnEn.classList.add('active');
+                    btnZh.classList.remove('active');
+                    document.documentElement.lang = 'en';
+                }
+                document.getElementById('mainCard').setAttribute('data-lang', lang);
+
+                // 更新所有带data-zh/en元素
+                document.querySelectorAll('[data-zh][data-en]').forEach(el => {
+                    const zh = el.getAttribute('data-zh');
+                    const en = el.getAttribute('data-en');
+                    if (lang === 'zh' && zh) {
+                        el.innerText = zh;
+                    } else if (lang === 'en' && en) {
+                        el.innerText = en;
+                    }
+                });
+
+                // 特殊处理个人简介: 它也是data属性，已包括在上面，很好。
+                // 更新日期等也已包括。
+            }
+
+            // 绑定点击事件
+            btnZh.addEventListener('click', function() {
+                setLanguageFinal('zh');
+            });
+            btnEn.addEventListener('click', function() {
+                setLanguageFinal('en');
+            });
+
+            // 设置初始语言为中文
+            setLanguageFinal('zh');
+        })();
+    </script>
+
+    <!-- 附加样式确保zh-only/en-only按语言显示 -->
+    <style>
+        [data-lang="zh"] .en-only {
+            display: none !important;
+        }
+        [data-lang="en"] .zh-only {
+            display: none !important;
+        }
+        /* 保证初始都有一些基础 */
+        .zh-only, .en-only {
+            display: inline; /* 默认都显示，但会被属性覆盖 */
+        }
+        /* 修正技能标签内的zh-only/en-only */
+        .skill-tag.zh-only, .skill-tag.en-only {
+            display: inline-block;  /* 作为标签块级化 */
+        }
+        [data-lang="zh"] .skill-tag.en-only {
+            display: none !important;
+        }
+        [data-lang="en"] .skill-tag.zh-only {
+            display: none !important;
+        }
+        /* 保持邮箱等不变 */
+    </style>
+    <!-- 确保所有数据被正确初始化，邮箱链接等 -->
+    <noscript>您的浏览器需要支持JavaScript来体验双语切换。</noscript>
+</body>
+</html>

@@ -14,18 +14,37 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
         }
 
-        /* 浅色渐变背景 (从上到下浅蓝/浅灰/浅紫) */
+        /* 背景图片 - 使用用户提供的照片 */
         body {
-            background: linear-gradient(145deg, #f0f4fa 0%, #f7f9fc 60%, #eef2f6 100%);
-            color: #1e2a3a;
+            background-image: url('file:///C:/Users/lenovo/Desktop/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=1561391101143704949&skey=@crypt_b747a71a_9bd5ca93ab08ece2b0ea902ccb20f72e&mmweb_appid=wx_webfilehelper.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #1e2e42;
             line-height: 1.5;
             min-height: 100vh;
+            position: relative;
+        }
+        /* 半透明白色蒙层，保证文字可读 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(4px);
+            z-index: 0;
         }
 
         .container {
             max-width: 1280px;
             margin: 0 auto;
             padding: 2rem 1.5rem;
+            position: relative;
+            z-index: 2;
         }
 
         /* 导航栏 */
@@ -38,22 +57,26 @@
             padding-bottom: 1rem;
             flex-wrap: wrap;
             gap: 1rem;
+            background: rgba(255,255,255,0.4);
+            border-radius: 60px;
+            padding: 0.8rem 2rem;
+            backdrop-filter: blur(8px);
         }
 
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
             flex-wrap: wrap;
         }
 
         .nav-links a {
-            color: #2c3e50;
+            color: #13294b;
             text-decoration: none;
             font-size: 1rem;
-            padding: 0.3rem 0;
-            border-bottom: 2px solid transparent;
+            font-weight: 550;
             transition: 0.2s;
-            font-weight: 500;
+            padding: 0.2rem 0;
+            border-bottom: 2px solid transparent;
         }
 
         .nav-links a:hover {
@@ -62,41 +85,53 @@
         }
 
         .lang-toggle {
-            background: #ffffff;
-            border: 1px solid #d0d9e8;
-            border-radius: 30px;
-            padding: 0.3rem 1.2rem;
+            background: #ffffffd9;
+            border: 1px solid rgba(255,255,255,0.9);
+            border-radius: 40px;
+            padding: 0.4rem 1.4rem;
             font-size: 0.9rem;
-            color: #1e2a3a;
+            color: #13294b;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            font-weight: 500;
+            backdrop-filter: blur(2px);
             transition: all 0.2s;
         }
 
         .lang-toggle:hover {
-            background: #e6edf7;
-            border-color: #8ba0c0;
+            background: white;
+            border-color: #1d4ed8;
+        }
+
+        /* 语言切换核心修复：确保只有当前语言显示 */
+        [data-lang="zh"] .en-only {
+            display: none !important;
+        }
+        [data-lang="en"] .zh-only {
+            display: none !important;
+        }
+        .zh-only, .en-only {
+            display: inline;
         }
 
         /* 左右两列布局 */
         .profile-grid {
             display: grid;
             grid-template-columns: 296px 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
         }
 
-        /* 左侧卡片 - 浅色毛玻璃效果 */
+        /* 左侧卡片 */
         .left-card {
             background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(2px);
-            border: 1px solid rgba(255,255,255,0.7);
-            border-radius: 24px;
-            padding: 1.8rem 1.5rem;
-            box-shadow: 0 15px 30px -10px rgba(0,20,40,0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 32px;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 20px 40px -12px rgba(0,30,60,0.2);
         }
 
-        /* 头像区域 - 使用用户提供的本地路径 */
+        /* 头像 - 使用用户提供的第一张照片 */
         .avatar-container {
             display: flex;
             justify-content: center;
@@ -110,161 +145,298 @@
             border: 4px solid white;
             object-fit: cover;
             background-color: #ffffff;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 12px 24px -8px rgba(0,20,40,0.2);
         }
 
         .name-large {
-            font-size: 1.9rem;
+            font-size: 2rem;
             font-weight: 600;
             color: #0b1e33;
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.3rem;
             text-align: center;
             letter-spacing: -0.01em;
         }
 
         .username {
             font-size: 1.2rem;
-            color: #4b5e77;
+            color: #2f4a6e;
             margin-bottom: 1rem;
             text-align: center;
             font-weight: 400;
         }
 
         .bio {
-            font-size: 1rem;
-            color: #1e2a3a;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            font-style: normal;
-            text-align: center;
-            background: rgba(230, 242, 255, 0.4);
+            background: rgba(255,255,255,0.5);
             border-radius: 40px;
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-size: 1rem;
         }
 
-        /* 联系方式图标行 - 移除QQ/微信 */
+        /* 联系方式图标行 (电话/邮箱/GitHub) */
         .contact-icons {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 1.8rem;
             margin-bottom: 1.5rem;
         }
 
         .contact-icons a {
-            color: #3f5575;
+            color: #2d4b75;
             font-size: 1.5rem;
             transition: 0.2s;
         }
 
         .contact-icons a:hover {
             color: #1d4ed8;
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
-        /* 个人箴言 - 新个签 */
+        /* 个人箴言 */
         .motto {
             background: rgba(255,255,255,0.7);
             padding: 1rem 1.2rem;
             border-radius: 40px;
-            border: 1px solid rgba(255,255,255,0.9);
+            border: 1px solid rgba(255,255,255,0.8);
             font-size: 1rem;
-            color: #1e2e4a;
-            margin-top: 1.2rem;
+            color: #13294b;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            backdrop-filter: blur(4px);
             font-style: italic;
-            backdrop-filter: blur(2px);
+            margin-top: 1.2rem;
         }
 
-        /* 右侧统计卡片 */
+        /* 右侧卡片统一样式 */
+        .content-card {
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.7);
+            border-radius: 32px;
+            padding: 1.8rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 15px 30px -12px rgba(0,32,64,0.15);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.3rem;
+            color: #0b2652;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            padding-bottom: 0.6rem;
+        }
+
+        /* 统计卡片 */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 1.2rem;
+            margin-bottom: 1.8rem;
         }
 
         .stat-card {
-            background: rgba(255,255,255,0.6);
-            backdrop-filter: blur(2px);
-            border: 1px solid rgba(255,255,255,0.8);
-            border-radius: 20px;
-            padding: 1.2rem 0.8rem;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.7);
+            border-radius: 28px;
+            padding: 1.3rem 0.8rem;
             text-align: center;
-            box-shadow: 0 8px 18px -6px rgba(0,32,64,0.08);
         }
 
         .stat-number {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: #1d4ed8;
             line-height: 1.2;
         }
 
         .stat-label {
-            color: #4f658d;
-            font-size: 0.85rem;
+            color: #2a4b77;
+            font-size: 0.9rem;
             font-weight: 500;
         }
 
-        /* 右侧内容卡片 */
-        .content-card {
-            background: rgba(255,255,255,0.6);
-            backdrop-filter: blur(2px);
-            border: 1px solid rgba(255,255,255,0.8);
-            border-radius: 24px;
-            padding: 1.6rem;
-            margin-bottom: 1.5rem;
-            scroll-margin-top: 2rem;
-            box-shadow: 0 10px 25px -10px rgba(0,32,64,0.1);
-        }
-
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1.2rem;
-            color: #13294b;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            padding-bottom: 0.6rem;
-        }
-
+        /* 技能标签 */
         .skill-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.7rem;
+            gap: 0.8rem;
         }
 
         .skill-tag {
-            background: white;
-            border: 1px solid #dce5f0;
+            background: rgba(255,255,255,0.9);
+            border: 1px solid #ffffff;
             border-radius: 40px;
-            padding: 0.4rem 1.2rem;
-            font-size: 0.9rem;
-            color: #1e2a3a;
-            font-weight: 450;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            padding: 0.5rem 1.3rem;
+            font-size: 0.95rem;
+            color: #13294b;
+            font-weight: 500;
         }
 
+        /* 摄影集 - 2x2 大尺寸 */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 1.2rem 0 0.5rem;
+        }
+        .gallery-item {
+            aspect-ratio: 4 / 3;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 25px -10px rgba(0,0,0,0.2);
+            border: 3px solid rgba(255,255,255,0.8);
+            background: #f0f4fa;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s;
+        }
+        .gallery-item img:hover {
+            transform: scale(1.02);
+        }
+
+        /* 项目条目 */
         .project-item {
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.3rem;
         }
-
         .project-title {
             font-weight: 600;
             color: #1d4ed8;
             margin-bottom: 0.2rem;
             font-size: 1.05rem;
         }
-
         .project-desc {
-            color: #4b5e77;
+            color: #2d4b75;
             font-size: 0.95rem;
-            margin-left: 0.5rem;
+            margin-left: 0.7rem;
         }
 
-        /* 响应式 */
+        /* 联系信息 */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            color: #13294b;
+            font-size: 1rem;
+        }
+        .contact-info i {
+            width: 28px;
+            color: #1d4ed8;
+        }
+
+        /* 自制留言区 - 真实存储 */
+        .guestbook-section {
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.7);
+            border-radius: 32px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        .message-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0 2rem;
+        }
+        .message-form input, .message-form textarea {
+            padding: 1rem 1.2rem;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.8);
+            font-size: 1rem;
+            outline: none;
+            transition: 0.2s;
+            backdrop-filter: blur(2px);
+        }
+        .message-form input:focus, .message-form textarea:focus {
+            border-color: #1d4ed8;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(29,78,216,0.2);
+        }
+        .message-form textarea {
+            min-height: 100px;
+            border-radius: 30px;
+            resize: vertical;
+        }
+        .message-form button {
+            background: #1d4ed8;
+            color: white;
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: fit-content;
+            transition: 0.2s;
+            border: 1px solid #3b6eff;
+        }
+        .message-form button:hover {
+            background: #2563eb;
+            transform: scale(1.02);
+        }
+        .message-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        .message-item {
+            background: rgba(255,255,255,0.7);
+            border-radius: 24px;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid rgba(255,255,255,0.8);
+            backdrop-filter: blur(4px);
+        }
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #1d4ed8;
+            font-weight: 550;
+        }
+        .message-time {
+            color: #4b6584;
+            font-weight: 400;
+            font-size: 0.8rem;
+        }
+        .message-content {
+            color: #1e2e42;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+        .empty-message {
+            color: #5e6f8d;
+            font-style: italic;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        /* 最后更新 */
+        .last-update {
+            text-align: right;
+            margin-top: 1.5rem;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255,255,255,0.5);
+            border-radius: 40px;
+            color: #1e3e64;
+            font-size: 0.9rem;
+            backdrop-filter: blur(4px);
+            display: inline-block;
+            float: right;
+        }
+
         @media (max-width: 768px) {
             .profile-grid {
                 grid-template-columns: 1fr;
@@ -272,17 +444,6 @@
             .stats-grid {
                 grid-template-columns: 1fr;
             }
-        }
-
-        /* 双语切换基础 */
-        [data-lang="en"] .zh-only {
-            display: none;
-        }
-        [data-lang="zh"] .en-only {
-            display: none;
-        }
-        .zh-only, .en-only {
-            display: inline;
         }
     </style>
 </head>
@@ -294,7 +455,9 @@
                 <a href="#about"><span class="zh-only">关于</span><span class="en-only">About</span></a>
                 <a href="#skills"><span class="zh-only">技能</span><span class="en-only">Skills</span></a>
                 <a href="#projects"><span class="zh-only">项目</span><span class="en-only">Projects</span></a>
+                <a href="#gallery"><span class="zh-only">摄影</span><span class="en-only">Gallery</span></a>
                 <a href="#contact"><span class="zh-only">联系</span><span class="en-only">Contact</span></a>
+                <a href="#guestbook"><span class="zh-only">留言</span><span class="en-only">Guestbook</span></a>
             </div>
             <button class="lang-toggle" id="langToggle">
                 <span class="zh-only">🌐 English</span>
@@ -304,13 +467,12 @@
 
         <!-- 左右网格布局 -->
         <div class="profile-grid">
-            <!-- 左侧个人资料卡 - 含用户指定头像 (本地路径) -->
+            <!-- 左侧个人资料卡 - 头像使用第一张照片 -->
             <div class="left-card">
                 <div class="avatar-container">
-                    <!-- 使用用户提供的绝对路径 (file:/// 在github pages环境下可能无法显示，但本地打开可以直接读取。这里保留路径) -->
                     <img class="avatar" src="file:///C:/Users/lenovo/Desktop/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=4217443301353021087&skey=@crypt_b747a71a_d8b318b1a0a437502d8ab1b59984a082&mmweb_appid=wx_webfilehelper.jpg" 
                          alt="张文希头像"
-                         onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23b7c9e2\'/%3E%3Ccircle cx=\'35\' cy=\'40\' r=\'5\' fill=\'white\'/%3E%3Ccircle cx=\'65\' cy=\'40\' r=\'5\' fill=\'white\'/%3E%3Ccircle cx=\'37\' cy=\'42\' r=\'2\' fill=\'black\'/%3E%3Ccircle cx=\'63\' cy=\'42\' r=\'2\' fill=\'black\'/%3E%3Cpath d=\'M30 60 Q50 75,70 60\' stroke=\'%23997766\' stroke-width=\'3\' fill=\'none\'/%3E%3C/svg%3E';">
+                         onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23b7c9e2\'/%3E%3Ccircle cx=\'35\' cy=\'40\' r=\'5\' fill=\'white\'/%3E%3Ccircle cx=\'65\' cy=\'40\' r=\'5\' fill=\'white\'/%3E%3Ccircle cx=\'37\' cy=\'42\' r=\'2\' fill=\'black\'/%3E%3Ccircle cx=\'63\' cy=\'42\' r=\'2\' fill=\'black\'/%3E%3C/svg%3E';">
                 </div>
                 
                 <div class="name-large">
@@ -322,19 +484,18 @@
                     <span class="en-only">@Sivan · Quantitative Finance</span>
                 </div>
                 <div class="bio">
-                    <!-- 大三改为大二 -->
                     <span class="zh-only">华东政法大学 · 大二</span>
                     <span class="en-only">ECUPL · Sophomore</span>
                 </div>
                 
-                <!-- 联系方式图标行 (电话、邮箱、GitHub；已移除QQ和微信) -->
+                <!-- 联系方式图标行 (电话/邮箱/GitHub) -->
                 <div class="contact-icons">
                     <a href="tel:15088206079" title="电话"><i class="fas fa-phone"></i></a>
                     <a href="mailto:2227077359@qq.com" title="邮箱"><i class="fas fa-envelope"></i></a>
                     <a href="https://github.com/Sivan-1" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
                 </div>
 
-                <!-- 个人箴言 - 新个签 -->
+                <!-- 个人箴言 -->
                 <div class="motto">
                     <i class="fas fa-feather" style="color: #1d4ed8; margin-right: 6px;"></i>
                     <span class="zh-only">曾有惊鸿照影来</span>
@@ -344,7 +505,7 @@
 
             <!-- 右侧主要内容区 -->
             <div>
-                <!-- 统计卡片 (根据简历定制) 未改动 -->
+                <!-- 统计卡片 -->
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-number">2</div>
@@ -369,7 +530,7 @@
                     </div>
                 </div>
 
-                <!-- 关于我 / About -->
+                <!-- 关于我 -->
                 <div id="about" class="content-card">
                     <div class="section-title">
                         <span class="zh-only">📋 关于我</span>
@@ -385,7 +546,7 @@
                     </p>
                 </div>
 
-                <!-- 技能 / Skills -->
+                <!-- 技能 -->
                 <div id="skills" class="content-card">
                     <div class="section-title">
                         <span class="zh-only">⚡ 技能</span>
@@ -407,7 +568,7 @@
                     </div>
                 </div>
 
-                <!-- 项目经验 / Projects - 只保留前两个项目 (后两个已移除) -->
+                <!-- 项目经验 (两个项目) -->
                 <div id="projects" class="content-card">
                     <div class="section-title">
                         <span class="zh-only">🚀 项目经验</span>
@@ -417,11 +578,11 @@
                     <div class="project-item">
                         <div class="project-title">
                             <span class="zh-only">📊 政策赋能下大数据与特色农产品融合共赢的新范式</span>
-                            <span class="en-only">📊 Big Data & Specialty Agriculture Integration</span>
+                            <span class="en-only">📊 Big Data & Specialty Agriculture</span>
                         </div>
                         <div class="project-desc">
                             <span class="zh-only">基于九品香莲的调研 · 负责项目策划与文书写作，推进校级立项</span>
-                            <span class="en-only">Research on Nine-Color Lotus · Project planning and documentation, advancing to university-level approval</span>
+                            <span class="en-only">Research on Nine-Color Lotus · Project planning, university-level approval</span>
                         </div>
                     </div>
                     
@@ -432,48 +593,170 @@
                         </div>
                         <div class="project-desc">
                             <span class="zh-only">基于青年社群小饭桌经济的研究 · 深入调研并撰写研究报告，获校级立项</span>
-                            <span class="en-only">Research on youth community dining economy, in-depth investigation and report writing, university-level project</span>
+                            <span class="en-only">Youth community dining economy research, university-level project</span>
                         </div>
                     </div>
-                    <!-- 原本的后两个项目（办公室行政、学生会）已删除 -->
                 </div>
 
-                <!-- 联系 / Contact - 已移除QQ和微信条目 -->
+                <!-- 摄影集 - 2x2 大尺寸 (四张照片) -->
+                <div id="gallery" class="content-card">
+                    <div class="section-title">
+                        <span class="zh-only">📸 摄影集</span>
+                        <span class="en-only">📸 Gallery</span>
+                    </div>
+                    <div class="gallery-grid">
+                        <div class="gallery-item">
+                            <img src="file:///C:/Users/lenovo/Desktop/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=5353047206227449006&skey=@crypt_b747a71a_9bd5ca93ab08ece2b0ea902ccb20f72e&mmweb_appid=wx_webfilehelper.jpg" alt="摄影1" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23d9e2f0\'/%3E%3Ctext x=\'30\' y=\'55\' fill=\'%23336699\'%3Eimg1%3C/text%3E%3C/svg%3E'">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="file:///C:/Users/lenovo/Desktop/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=4252627146879456504&skey=@crypt_b747a71a_9bd5ca93ab08ece2b0ea902ccb20f72e&mmweb_appid=wx_webfilehelper.jpg" alt="摄影2" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23d9e2f0\'/%3E%3Ctext x=\'30\' y=\'55\' fill=\'%23336699\'%3Eimg2%3C/text%3E%3C/svg%3E'">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="file:///C:/Users/lenovo/Desktop/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=5205804546299261929&skey=@crypt_b747a71a_9bd5ca93ab08ece2b0ea902ccb20f72e&mmweb_appid=wx_webfilehelper.jpg" alt="摄影3" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23d9e2f0\'/%3E%3Ctext x=\'30\' y=\'55\' fill=\'%23336699\'%3Eimg3%3C/text%3E%3C/svg%3E'">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="file:///C:/Users/lenovo/Desktop/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=7721825733826995877&skey=@crypt_b747a71a_9bd5ca93ab08ece2b0ea902ccb20f72e&mmweb_appid=wx_webfilehelper.jpg" alt="摄影4" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23d9e2f0\'/%3E%3Ctext x=\'30\' y=\'55\' fill=\'%23336699\'%3Eimg4%3C/text%3E%3C/svg%3E'">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 联系 -->
                 <div id="contact" class="content-card">
                     <div class="section-title">
                         <span class="zh-only">📫 联系我</span>
                         <span class="en-only">📫 Contact</span>
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 0.7rem; color: #2d4059;">
-                        <div><i class="fas fa-phone" style="width: 28px; color:#1d4ed8;"></i> 15088206079</div>
-                        <div><i class="fas fa-envelope" style="width: 28px; color:#1d4ed8;"></i> 2227077359@qq.com</div>
-                        <!-- QQ和微信图标行已移除，仅保留电话、邮箱、GitHub (GitHub在图标行已有，此处可展示链接) -->
-                        <div><i class="fab fa-github" style="width: 28px; color:#1d4ed8;"></i> github.com/Sivan-1</div>
+                    <div class="contact-info">
+                        <div><i class="fas fa-phone"></i> 15088206079</div>
+                        <div><i class="fas fa-envelope"></i> 2227077359@qq.com</div>
+                        <div><i class="fab fa-github"></i> github.com/Sivan-1</div>
                     </div>
                 </div>
                 
-                <!-- 最后更新日期 - 已去掉贡献日历，但保留一个干净的最后更新行 (符合作业要求) -->
-                <div style="text-align: right; margin-top: 1rem; padding: 0.5rem 1rem; background: rgba(255,255,255,0.4); border-radius: 40px; color: #3f5575; font-size: 0.9rem;">
+                <!-- 最后更新日期 -->
+                <div class="last-update">
                     <span class="zh-only">📅 最后更新: 2026-03-08</span>
                     <span class="en-only">📅 Last updated: 2026-03-08</span>
                 </div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+
+        <!-- 留言区 - 完全自制，真实存储留言 (使用localStorage) -->
+        <div id="guestbook" class="guestbook-section">
+            <div class="section-title">
+                <span class="zh-only">💬 留言板</span>
+                <span class="en-only">💬 Guestbook</span>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: #1e3e64;">
+                <span class="zh-only">欢迎留下你的建议或想说的话 👇</span>
+                <span class="en-only">Feel free to leave a message 👇</span>
+            </p>
+            
+            <!-- 留言表单 -->
+            <div class="message-form">
+                <input type="text" id="msgName" placeholder="你的名字 / Your name" value="访客">
+                <textarea id="msgContent" placeholder="留言内容 / Message" rows="3"></textarea>
+                <button id="submitMsg"><span class="zh-only">发布留言</span><span class="en-only">Post</span></button>
+            </div>
+
+            <!-- 留言列表 -->
+            <div id="messageList" class="message-list">
+                <!-- 动态通过js加载 -->
             </div>
         </div>
     </div>
 
-    <!-- 语言切换脚本 -->
     <script>
-        // 语言切换功能
-        const toggle = document.getElementById('langToggle');
-        const container = document.getElementById('mainContainer');
-        
-        toggle.addEventListener('click', () => {
-            const currentLang = container.getAttribute('data-lang');
-            const newLang = currentLang === 'zh' ? 'en' : 'zh';
-            container.setAttribute('data-lang', newLang);
-        });
+        (function() {
+            // 语言切换
+            const toggle = document.getElementById('langToggle');
+            const container = document.getElementById('mainContainer');
+            toggle.addEventListener('click', () => {
+                const current = container.getAttribute('data-lang');
+                container.setAttribute('data-lang', current === 'zh' ? 'en' : 'zh');
+            });
 
-        // (已移除贡献日历生成代码)
+            // ---------- 自制留言区 (localStorage 存储) ----------
+            const STORAGE_KEY = 'wenxi_guestbook';
+            
+            // 加载留言并显示
+            function loadMessages() {
+                const messages = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                const listDiv = document.getElementById('messageList');
+                if (!listDiv) return;
+
+                if (messages.length === 0) {
+                    listDiv.innerHTML = `<div class="empty-message"><span class="zh-only">✨ 还没有留言，来留下第一条吧～</span><span class="en-only">✨ No messages yet. Be the first!</span></div>`;
+                    return;
+                }
+
+                // 按时间倒序排列
+                messages.sort((a,b) => new Date(b.time) - new Date(a.time));
+                let html = '';
+                messages.forEach(m => {
+                    html += `
+                        <div class="message-item">
+                            <div class="message-header">
+                                <span>${escapeHtml(m.name || '访客')}</span>
+                                <span class="message-time">${m.time}</span>
+                            </div>
+                            <div class="message-content">${escapeHtml(m.content)}</div>
+                        </div>
+                    `;
+                });
+                listDiv.innerHTML = html;
+            }
+
+            // 简单的防XSS
+            function escapeHtml(unsafe) {
+                if (!unsafe) return '';
+                return unsafe
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
+            // 添加新留言
+            function addMessage(name, content) {
+                if (!content.trim()) {
+                    alert('留言内容不能为空 / Message cannot be empty');
+                    return false;
+                }
+                const messages = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+                const now = new Date();
+                const timeStr = now.toLocaleString('zh-CN', {hour12: false});
+                messages.push({
+                    name: name.trim() || '访客',
+                    content: content.trim(),
+                    time: timeStr
+                });
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+                loadMessages();
+                return true;
+            }
+
+            // 绑定提交事件
+            const submitBtn = document.getElementById('submitMsg');
+            if (submitBtn) {
+                submitBtn.addEventListener('click', function() {
+                    const nameInput = document.getElementById('msgName');
+                    const contentInput = document.getElementById('msgContent');
+                    const name = nameInput ? nameInput.value : '访客';
+                    const content = contentInput ? contentInput.value : '';
+                    if (addMessage(name, content)) {
+                        if (contentInput) contentInput.value = ''; // 清空内容框，保留名字
+                    }
+                });
+            }
+
+            // 初始加载留言
+            loadMessages();
+
+            // 头像/图片加载失败时的后备已经由onerror处理
+        })();
     </script>
 </body>
 </html>

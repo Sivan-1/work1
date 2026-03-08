@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>张文希 · 个人主页</title>
+    <!-- Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #e6edf3;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* 导航栏 */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #e6edf3;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.3rem 0;
+            border-bottom: 2px solid transparent;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #2f81f7;
+            border-bottom-color: #2f81f7;
+        }
+
+        .lang-toggle {
+            background: #21262d;
+            border: 1px solid #3d444d;
+            border-radius: 6px;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.9rem;
+            color: #e6edf3;
+            cursor: pointer;
+        }
+
+        .lang-toggle:hover {
+            background: #30363d;
+        }
+
+        /* 左右两列布局 */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 296px 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* 左侧卡片 - 含头像 */
+        .left-card {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 1.5rem;
+        }
+
+        /* 头像区域 - Chiikawa小八 */
+        .avatar-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 3px solid #2f81f7;
+            object-fit: cover;
+            background-color: #f1f5f9;
+        }
+
+        .name-large {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #e6edf3;
+            margin-bottom: 0.2rem;
+            text-align: center;
+        }
+
+        .username {
+            font-size: 1.2rem;
+            color: #8b949e;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .bio {
+            font-size: 1rem;
+            color: #e6edf3;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #30363d;
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* 联系方式图标行 */
+        .contact-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icons a {
+            color: #8b949e;
+            font-size: 1.4rem;
+            transition: 0.2s;
+        }
+
+        .contact-icons a:hover {
+            color: #2f81f7;
+        }
+
+        /* 个人箴言 */
+        .motto {
+            background: #161b22;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid #2f81f7;
+            font-size: 0.95rem;
+            color: #8b949e;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* 右侧统计卡片 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2f81f7;
+        }
+
+        .stat-label {
+            color: #8b949e;
+            font-size: 0.85rem;
+        }
+
+        /* 右侧内容卡片 */
+        .content-card {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            scroll-margin-top: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #e6edf3;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 0.5rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .skill-tag {
+            background: #21262d;
+            border: 1px solid #3d444d;
+            border-radius: 20px;
+            padding: 0.3rem 1rem;
+            font-size: 0.9rem;
+            color: #e6edf3;
+        }
+
+        .project-item {
+            margin-bottom: 1.2rem;
+        }
+
+        .project-title {
+            font-weight: 600;
+            color: #2f81f7;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-desc {
+            color: #8b949e;
+            font-size: 0.95rem;
+            margin-left: 0.5rem;
+        }
+
+        /* 底部贡献日历模拟 */
+        .calendar {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: #8b949e;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(52, 1fr);
+            gap: 3px;
+        }
+
+        .cal-cell {
+            aspect-ratio: 1;
+            background: #161b22;
+            border-radius: 2px;
+        }
+
+        .cal-cell.active {
+            background: #2f81f7;
+        }
+
+        .cal-cell.mid {
+            background: #1e6f9f;
+        }
+
+        .cal-cell.light {
+            background: #238636;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 双语切换基础 */
+        [data-lang="en"] .zh-only {
+            display: none;
+        }
+        [data-lang="zh"] .en-only {
+            display: none;
+        }
+        .zh-only, .en-only {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainContainer" data-lang="zh">
+        <!-- 导航栏 + 语言切换 -->
+        <div class="nav-bar">
+            <div class="nav-links">
+                <a href="#about"><span class="zh-only">关于</span><span class="en-only">About</span></a>
+                <a href="#skills"><span class="zh-only">技能</span><span class="en-only">Skills</span></a>
+                <a href="#projects"><span class="zh-only">项目</span><span class="en-only">Projects</span></a>
+                <a href="#contact"><span class="zh-only">联系</span><span class="en-only">Contact</span></a>
+            </div>
+            <button class="lang-toggle" id="langToggle">
+                <span class="zh-only">🌐 English</span>
+                <span class="en-only">🌐 中文</span>
+            </button>
+        </div>
+
+        <!-- 左右网格布局 -->
+        <div class="profile-grid">
+            <!-- 左侧个人资料卡 - 含Chiikawa头像 -->
+            <div class="left-card">
+                <!-- Chiikawa 小八头像 - 使用Base64内嵌图片，确保直接可用 -->
+                <div class="avatar-container">
+                    <img class="avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%234B8BBE'/%3E%3Ccircle cx='35' cy='40' r='5' fill='white'/%3E%3Ccircle cx='65' cy='40' r='5' fill='white'/%3E%3Ccircle cx='37' cy='42' r='2' fill='black'/%3E%3Ccircle cx='63' cy='42' r='2' fill='black'/%3E%3Cpath d='M30 60 Q50 75,70 60' stroke='%23F4A261' stroke-width='3' fill='none'/%3E%3Ccircle cx='50' cy='28' r='8' fill='%23FADFAD'/%3E%3C/svg%3E" 
+                         alt="Chiikawa Hachiware Avatar">
+                </div>
+                
+                <div class="name-large">
+                    <span class="zh-only">张文希</span>
+                    <span class="en-only">Wenxi Zhang</span>
+                </div>
+                <div class="username">
+                    <span class="zh-only">@Sivan · 金融学（数量金融方向）</span>
+                    <span class="en-only">@Sivan · Quantitative Finance</span>
+                </div>
+                <div class="bio">
+                    <span class="zh-only">华东政法大学 · 大三</span>
+                    <span class="en-only">ECUPL · Junior</span>
+                </div>
+                
+                <!-- 联系方式图标行 -->
+                <div class="contact-icons">
+                    <a href="tel:15088206079" title="电话"><i class="fas fa-phone"></i></a>
+                    <a href="mailto:2227077359@qq.com" title="邮箱"><i class="fas fa-envelope"></i></a>
+                    <a href="#" title="QQ"><i class="fab fa-qq"></i></a>
+                    <a href="#" title="微信"><i class="fab fa-weixin"></i></a>
+                    <a href="https://github.com/Sivan-1" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                </div>
+
+                <!-- 个人箴言 -->
+                <div class="motto">
+                    <i class="fas fa-quote-left" style="color: #2f81f7; margin-right: 5px;"></i>
+                    <span class="zh-only">人生而自由，却无往不在枷锁之中。</span>
+                    <span class="en-only">Man is born free, and everywhere he is in chains.</span>
+                </div>
+            </div>
+
+            <!-- 右侧主要内容区 -->
+            <div>
+                <!-- 统计卡片 (根据简历定制) -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">
+                            <span class="zh-only">校级立项</span>
+                            <span class="en-only">Projects</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">
+                            <span class="zh-only">实践经历</span>
+                            <span class="en-only">Experiences</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">
+                            <span class="zh-only">技能证书</span>
+                            <span class="en-only">Certificates</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 关于我 / About - 从简历提取 -->
+                <div id="about" class="content-card">
+                    <div class="section-title">
+                        <span class="zh-only">📋 关于我</span>
+                        <span class="en-only">📋 About</span>
+                    </div>
+                    <p style="color: #e6edf3; margin-bottom: 0.5rem;">
+                        <span class="zh-only">张文希，华东政法大学金融学（数量金融方向）大三学生。始终保持积极进取的态度，注重理论与实践相结合。通过参与多个校内外项目，积累了项目管理经验，提升了沟通协调能力和团队合作意识。</span>
+                        <span class="en-only">Wenxi Zhang, junior in Quantitative Finance at ECUPL. Maintains a proactive attitude, combining theory with practice. Through multiple projects, gained project management experience and improved communication skills.</span>
+                    </p>
+                    <p style="color: #8b949e; margin-top: 0.8rem;">
+                        <span class="zh-only">📚 主修课程：微观经济学、宏观经济学、高等数学、线性代数</span>
+                        <span class="en-only">📚 Courses: Micro/Macro Economics, Advanced Math, Linear Algebra</span>
+                    </p>
+                </div>
+
+                <!-- 技能 / Skills - 从简历提取 -->
+                <div id="skills" class="content-card">
+                    <div class="section-title">
+                        <span class="zh-only">⚡ 技能</span>
+                        <span class="en-only">⚡ Skills</span>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag zh-only">Python（数据分析）</span>
+                        <span class="skill-tag en-only">Python (Data Analysis)</span>
+                        
+                        <span class="skill-tag zh-only">Stata / 计量</span>
+                        <span class="skill-tag en-only">Stata / Econometrics</span>
+                        
+                        <span class="skill-tag zh-only">Excel 高级分析</span>
+                        <span class="skill-tag en-only">Excel Advanced</span>
+                        
+                        <span class="skill-tag zh-only">Office 办公软件</span>
+                        <span class="skill-tag en-only">MS Office</span>
+                        
+                        <span class="skill-tag zh-only">英语 CET-4</span>
+                        <span class="skill-tag en-only">English CET-4</span>
+                        
+                        <span class="skill-tag zh-only">研究报告写作</span>
+                        <span class="skill-tag en-only">Research Writing</span>
+                    </div>
+                </div>
+
+                <!-- 项目经验 / Projects - 从简历提取 -->
+                <div id="projects" class="content-card">
+                    <div class="section-title">
+                        <span class="zh-only">🚀 项目经验</span>
+                        <span class="en-only">🚀 Projects</span>
+                    </div>
+                    
+                    <div class="project-item">
+                        <div class="project-title">
+                            <span class="zh-only">📊 政策赋能下大数据与特色农产品融合共赢的新范式</span>
+                            <span class="en-only">📊 Big Data & Specialty Agriculture Integration</span>
+                        </div>
+                        <div class="project-desc">
+                            <span class="zh-only">基于九品香莲的调研 · 负责项目策划与文书写作，推进校级立项</span>
+                            <span class="en-only">Research on Nine-Color Lotus · Project planning and documentation, advancing to university-level approval</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-item">
+                        <div class="project-title">
+                            <span class="zh-only">🍚 反向消费背景下如何提振经济活力</span>
+                            <span class="en-only">🍚 Boosting Economy via Reverse Consumption</span>
+                        </div>
+                        <div class="project-desc">
+                            <span class="zh-only">基于青年社群小饭桌经济的研究 · 深入调研并撰写研究报告，获校级立项</span>
+                            <span class="en-only">Research on youth community dining economy, in-depth investigation and report writing, university-level project</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-item">
+                        <div class="project-title">
+                            <span class="zh-only">🏢 商学院办公室行政实践</span>
+                            <span class="en-only">🏢 Business School Office Administration</span>
+                        </div>
+                        <div class="project-desc">
+                            <span class="zh-only">负责文件登记、报备等文书工作，积累行政事务处理经验</span>
+                            <span class="en-only">Document registration, reporting, and administrative experience</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-item">
+                        <div class="project-title">
+                            <span class="zh-only">📋 学生会综合事务部</span>
+                            <span class="en-only">📋 Student Union General Affairs</span>
+                        </div>
+                        <div class="project-desc">
+                            <span class="zh-only">负责财务组工作，参与日常财务管理及活动预算编制</span>
+                            <span class="en-only">Financial management and activity budgeting</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 联系 / Contact -->
+                <div id="contact" class="content-card">
+                    <div class="section-title">
+                        <span class="zh-only">📫 联系我</span>
+                        <span class="en-only">📫 Contact</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem; color: #8b949e;">
+                        <div><i class="fas fa-phone" style="width: 25px;"></i> 15088206079</div>
+                        <div><i class="fas fa-envelope" style="width: 25px;"></i> 2227077359@qq.com</div>
+                        <div><i class="fab fa-qq" style="width: 25px;"></i> 2227077359</div>
+                        <div><i class="fab fa-weixin" style="width: 25px;"></i> Sivan-1</div>
+                        <div><i class="fab fa-github" style="width: 25px;"></i> github.com/Sivan-1</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部贡献日历 (模拟截图风格) -->
+        <div class="calendar">
+            <div class="calendar-header">
+                <span>
+                    <span class="zh-only">📅 贡献日历 · 模拟</span>
+                    <span class="en-only">📅 Contribution Calendar · Demo</span>
+                </span>
+                <span class="zh-only">最后更新: 2026-03-07</span>
+                <span class="en-only">Last updated: 2026-03-07</span>
+            </div>
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- 用JS生成52*7个格子，模拟贡献图 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 语言切换脚本 + 日历生成 -->
+    <script>
+        // 语言切换功能
+        const toggle = document.getElementById('langToggle');
+        const container = document.getElementById('mainContainer');
+        
+        toggle.addEventListener('click', () => {
+            const currentLang = container.getAttribute('data-lang');
+            const newLang = currentLang === 'zh' ? 'en' : 'zh';
+            container.setAttribute('data-lang', newLang);
+        });
+
+        // 生成贡献日历格子
+        const calendarGrid = document.getElementById('calendarGrid');
+        if (calendarGrid) {
+            for(let i = 0; i < 364; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cal-cell';
+                // 随机添加一些活跃格子，让日历看起来更真实
+                if (i % 7 === 0 || i % 13 === 0 || i % 19 === 0) {
+                    cell.classList.add('active');
+                } else if (i % 5 === 0 || i % 11 === 0) {
+                    cell.classList.add('mid');
+                } else if (i % 23 === 0) {
+                    cell.classList.add('light');
+                }
+                calendarGrid.appendChild(cell);
+            }
+        }
+    </script>
+</body>
+</html>

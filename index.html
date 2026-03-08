@@ -14,9 +14,9 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
         }
 
-        /* 背景图片 - 使用用户提供的照片 */
+        /* 背景图片 - 如果不想用背景图，可以删除下面这一整行 */
         body {
-            background-image: url('file:///C:/Users/lenovo/Desktop/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=1561391101143704949&skey=@crypt_b747a71a_9bd5ca93ab08ece2b0ea902ccb20f72e&mmweb_appid=wx_webfilehelper.jpg');
+            background-image: url('');
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
@@ -131,7 +131,7 @@
             box-shadow: 0 20px 40px -12px rgba(0,30,60,0.2);
         }
 
-        /* 头像 - 使用用户提供的第一张照片 */
+        /* 头像 */
         .avatar-container {
             display: flex;
             justify-content: center;
@@ -467,12 +467,11 @@
 
         <!-- 左右网格布局 -->
         <div class="profile-grid">
-            <!-- 左侧个人资料卡 - 头像使用第一张照片 -->
+            <!-- 左侧个人资料卡 -->
             <div class="left-card">
                 <div class="avatar-container">
-                    <img class="avatar" src="file:///C:/Users/lenovo/Desktop/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=4217443301353021087&skey=@crypt_b747a71a_d8b318b1a0a437502d8ab1b59984a082&mmweb_appid=wx_webfilehelper.jpg" 
-                         alt="张文希头像"
-                         onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23b7c9e2\'/%3E%3Ccircle cx=\'35\' cy=\'40\' r=\'5\' fill=\'white\'/%3E%3Ccircle cx=\'65\' cy=\'40\' r=\'5\' fill=\'white\'/%3E%3Ccircle cx=\'37\' cy=\'42\' r=\'2\' fill=\'black\'/%3E%3Ccircle cx=\'63\' cy=\'42\' r=\'2\' fill=\'black\'/%3E%3C/svg%3E';">
+                    <!-- 头像路径已修改为：avatar.jpg -->
+                    <img class="avatar" src="avatar.jpg" alt="张文希头像">
                 </div>
                 
                 <div class="name-large">
@@ -605,17 +604,18 @@
                         <span class="en-only">📸 Gallery</span>
                     </div>
                     <div class="gallery-grid">
+                        <!-- 图片路径已修改为：pic1.jpg - pic4.jpg -->
                         <div class="gallery-item">
-                            <img src="file:///C:/Users/lenovo/Desktop/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=5353047206227449006&skey=@crypt_b747a71a_9bd5ca93ab08ece2b0ea902ccb20f72e&mmweb_appid=wx_webfilehelper.jpg" alt="摄影1" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23d9e2f0\'/%3E%3Ctext x=\'30\' y=\'55\' fill=\'%23336699\'%3Eimg1%3C/text%3E%3C/svg%3E'">
+                            <img src="pic1.jpg" alt="摄影1">
                         </div>
                         <div class="gallery-item">
-                            <img src="file:///C:/Users/lenovo/Desktop/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=4252627146879456504&skey=@crypt_b747a71a_9bd5ca93ab08ece2b0ea902ccb20f72e&mmweb_appid=wx_webfilehelper.jpg" alt="摄影2" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23d9e2f0\'/%3E%3Ctext x=\'30\' y=\'55\' fill=\'%23336699\'%3Eimg2%3C/text%3E%3C/svg%3E'">
+                            <img src="pic2.jpg" alt="摄影2">
                         </div>
                         <div class="gallery-item">
-                            <img src="file:///C:/Users/lenovo/Desktop/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=5205804546299261929&skey=@crypt_b747a71a_9bd5ca93ab08ece2b0ea902ccb20f72e&mmweb_appid=wx_webfilehelper.jpg" alt="摄影3" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23d9e2f0\'/%3E%3Ctext x=\'30\' y=\'55\' fill=\'%23336699\'%3Eimg3%3C/text%3E%3C/svg%3E'">
+                            <img src="pic3.jpg" alt="摄影3">
                         </div>
                         <div class="gallery-item">
-                            <img src="file:///C:/Users/lenovo/Desktop/_cgi-bin_mmwebwx-bin_webwxgetmsgimg__&MsgID=7721825733826995877&skey=@crypt_b747a71a_9bd5ca93ab08ece2b0ea902ccb20f72e&mmweb_appid=wx_webfilehelper.jpg" alt="摄影4" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23d9e2f0\'/%3E%3Ctext x=\'30\' y=\'55\' fill=\'%23336699\'%3Eimg4%3C/text%3E%3C/svg%3E'">
+                            <img src="pic4.jpg" alt="摄影4">
                         </div>
                     </div>
                 </div>
@@ -754,8 +754,6 @@
 
             // 初始加载留言
             loadMessages();
-
-            // 头像/图片加载失败时的后备已经由onerror处理
         })();
     </script>
 </body>
